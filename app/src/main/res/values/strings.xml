@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">StaffCafePOSApp</string>
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="menu_title">Menu</string>
+    <string name="orders_title">Orders</string>
+    <string name="tables_title">Tables</string>
 </resources>
