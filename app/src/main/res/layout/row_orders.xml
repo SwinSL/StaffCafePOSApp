@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/textview_orders_orderid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_id"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                />
+            <TextView
+                android:id="@+id/textview_orders_orderid_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/textview_orders_orderid"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                />
+            <TextView
+                android:id="@+id/textview_orders_tableno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/table_no"
+                android:textSize="20sp"
+                android:layout_below="@id/textview_orders_orderid"
+                android:layout_alignStart="@id/textview_orders_orderid"
+                />
+            <TextView
+                android:id="@+id/textview_orders_tableno_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/textview_orders_tableno"
+                android:layout_below="@id/textview_orders_orderid"
+                android:textSize="20sp"
+                android:layout_marginStart="5dp"
+                />
+            <TextView
+                android:id="@+id/textview_orders_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/status"
+                android:layout_toStartOf="@id/textview_orders_status_data"
+
+                />
+            <TextView
+                android:id="@+id/textview_orders_status_data"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:layout_alignBaseline="@id/textview_orders_status"
+                />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

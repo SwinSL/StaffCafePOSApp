@@ -4,4 +4,10 @@
     <string name="menu_title">Menu</string>
     <string name="orders_title">Orders</string>
     <string name="tables_title">Tables</string>
+    <string name="order_id">Order ID:</string>
+    <string name="table_no">Table No:</string>
+    <string name="status">Status:</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="total">Total:</string>
+    <string name="make_payment">Make payment</string>
 </resources>
