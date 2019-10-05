@@ -30,4 +30,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'com.google.firebase:firebase-firestore:17.1.2'
     testImplementation 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -11,9 +11,9 @@
     <string name="total">Total:</string>
     <string name="make_payment">Make payment</string>
     <string name="title">StaffCafePOS Login</string>
-    <string name="username">Username :</string>
-    <string name="enter_your_username">Enter Your Username</string>
+    <string name="enter_your_username">Enter Your Email</string>
     <string name="password">Password :</string>
     <string name="enter_your_password">Enter Your Password</string>
     <string name="login">LOGIN</string>
+    <string name="email">Email :</string>
 </resources>
