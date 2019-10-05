@@ -3,15 +3,18 @@ package com.example.staffcafeposapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.staffcafeposapp.Fragments.MenuFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editText_username, editText_pass;
     private Button btn_login;
     private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         initUI();
 
         firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,13 +56,17 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                progressDialog.setMessage("Logging in.");
+                progressDialog.show();
+
                 firebaseAuth.signInWithEmailAndPassword(username,password).addOnCompleteListener(LoginActivity.this,new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
+                            progressDialog.dismiss();
                             Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                         else
                         {
