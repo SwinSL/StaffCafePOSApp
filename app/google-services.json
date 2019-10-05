@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "690854223663",
+    "firebase_url": "https://posapp-496f7.firebaseio.com",
+    "project_id": "posapp-496f7",
+    "storage_bucket": "posapp-496f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690854223663:android:3e40d73beef3005b608bda",
+        "android_client_info": {
+          "package_name": "com.example.staffcafeposapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690854223663-eh3q84lf7m2l647jmk1sk24eg3qug4jj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.staffcafeposapp",
+            "certificate_hash": "fe4691934bb71e3a1246fbb322e3831cea1d2319"
+          }
+        },
+        {
+          "client_id": "690854223663-aerg5kgh31arl3kro4mob6evt75tnqvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrZ-_Ax49f210cnDlWDyokIrzPIhFOnJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690854223663-aerg5kgh31arl3kro4mob6evt75tnqvv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
