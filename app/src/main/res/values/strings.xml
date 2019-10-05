@@ -21,5 +21,7 @@
     <string name="name">Name</string>
     <string name="price_rm">Price (RM)</string>
     <string name="quantity">Quantity</string>
+    <string name="order_summury">Order Summury</string>
+    <string name="quantity_orderSummary">Quantity</string>
 
 </resources>
