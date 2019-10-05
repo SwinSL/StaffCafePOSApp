@@ -16,4 +16,10 @@
     <string name="enter_your_password">Enter Your Password</string>
     <string name="login">LOGIN</string>
     <string name="email">Email :</string>
+    <string name="food">Food</string>
+    <string name="beverages">Beverages</string>
+    <string name="name">Name</string>
+    <string name="price_rm">Price (RM)</string>
+    <string name="quantity">Quantity</string>
+
 </resources>
