@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/popup_cardView"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:backgroundTint="@android:color/darker_gray"
@@ -17,17 +18,21 @@
             android:padding="15dp">
             <TextView
                 android:id="@+id/orders_item_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:layout_weight="7"
+                android:paddingStart="20dp"
+                android:layout_weight="4"
+                android:fontFamily="@font/raleway"
                 />
             <TextView
                 android:id="@+id/orders_item_price"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="18sp"
+                android:textAlignment="viewStart"
+                android:fontFamily="@font/raleway"
                 />
         </LinearLayout>
 

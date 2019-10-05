@@ -14,32 +14,35 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="12dp">
+
             <TextView
                 android:id="@+id/textview_orders_orderid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/order_id"
-                android:textSize="20sp"
                 android:layout_marginStart="10dp"
-                />
+                android:fontFamily="@font/raleway"
+                android:text="@string/order_id"
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/textview_orders_orderid_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/textview_orders_orderid"
                 android:textSize="20sp"
+                android:fontFamily="@font/raleway"
                 android:layout_marginStart="5dp"
                 />
+
             <TextView
                 android:id="@+id/textview_orders_tableno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/table_no"
-                android:textSize="20sp"
                 android:layout_below="@id/textview_orders_orderid"
                 android:layout_alignStart="@id/textview_orders_orderid"
-                />
+                android:fontFamily="@font/raleway"
+                android:text="@string/table_no"
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/textview_orders_tableno_data"
                 android:layout_width="wrap_content"
@@ -47,26 +50,31 @@
                 android:layout_toEndOf="@id/textview_orders_tableno"
                 android:layout_below="@id/textview_orders_orderid"
                 android:textSize="20sp"
+                android:fontFamily="@font/raleway"
                 android:layout_marginStart="5dp"
                 />
+
             <TextView
                 android:id="@+id/textview_orders_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/status"
+                android:layout_alignBaseline="@id/textview_orders_orderid"
                 android:layout_toStartOf="@id/textview_orders_status_data"
+                android:fontFamily="@font/raleway"
+                android:text="@string/status"
+                android:textSize="20sp" />
 
-                />
             <TextView
                 android:id="@+id/textview_orders_status_data"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
+                android:fontFamily="@font/raleway"
                 android:layout_alignBaseline="@id/textview_orders_status"
-                />
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="20sp" />
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>

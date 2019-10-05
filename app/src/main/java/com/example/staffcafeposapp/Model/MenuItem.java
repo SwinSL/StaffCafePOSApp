@@ -3,10 +3,15 @@ package com.example.staffcafeposapp.Model;
 public class MenuItem {
     private String item_name;
     private double item_price;
+    private int quantity;
 
-    public MenuItem(String item_name, double item_price) {
+    public MenuItem() {
+    }
+
+    public MenuItem(String item_name, double item_price, int quantity) {
         this.item_name = item_name;
         this.item_price = item_price;
+        this.quantity = quantity;
     }
 
     public String getItem_name() {
@@ -23,5 +28,13 @@ public class MenuItem {
 
     public void setItem_price(double item_price) {
         this.item_price = item_price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
