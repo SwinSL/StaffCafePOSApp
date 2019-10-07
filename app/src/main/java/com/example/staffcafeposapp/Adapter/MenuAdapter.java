@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.staffcafeposapp.Model.Food;
+import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.R;
 
 import java.util.ArrayList;
@@ -21,10 +21,9 @@ import java.util.ArrayList;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
 
     private Context context;
-    private ArrayList<Food> foodList;
+    private ArrayList<MenuItem> foodList;
 
-
-    public MenuAdapter(Context context, ArrayList<Food> foodList) {
+    public MenuAdapter(Context context, ArrayList<MenuItem> foodList) {
         this.context = context;
         this.foodList = foodList;
     }
@@ -39,10 +38,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Food food =  foodList.get(position);
+        MenuItem food =  foodList.get(position);
 
-        holder.textView_food.setText(String.valueOf(food.getName()));
-        holder.textView_foodPrice.setText(String.valueOf(food.getPrice()));
+        holder.textView_food.setText(String.valueOf(food.getItem_name()));
+        holder.textView_foodPrice.setText(String.valueOf(food.getItem_price()));
 
     }
 

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.staffcafeposapp.Model.Beverages;
+import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.R;
 
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 public class Beverages_Adapter extends RecyclerView.Adapter<Beverages_Adapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<Beverages> beveragesList;
+    private ArrayList<MenuItem> beveragesList;
 
-    public Beverages_Adapter(Context context, ArrayList<Beverages> beveragesList) {
+    public Beverages_Adapter(Context context, ArrayList<MenuItem> beveragesList) {
         this.context = context;
         this.beveragesList = beveragesList;
     }
@@ -36,10 +36,10 @@ public class Beverages_Adapter extends RecyclerView.Adapter<Beverages_Adapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Beverages beverages = beveragesList.get(position);
+        MenuItem beverages = beveragesList.get(position);
 
-        holder.textView_beverages.setText(String.valueOf(beverages.getBeverages_name()));
-        holder.textView_beveragesPrice.setText(String.valueOf(beverages.getBeverages_price()));
+        holder.textView_beverages.setText(String.valueOf(beverages.getItem_name()));
+        holder.textView_beveragesPrice.setText(String.valueOf(beverages.getItem_price()));
 
 
     }
