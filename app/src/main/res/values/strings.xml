@@ -28,5 +28,6 @@
     <string name="subtotal">SubTotal</string>
     <string name="submit">Submit</string>
     <string name="item_name">Item Name</string>
+    <string name="add_item">Add Item</string>
 
 </resources>
