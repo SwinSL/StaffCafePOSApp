@@ -3,19 +3,19 @@ package com.example.staffcafeposapp.Model;
 import java.util.ArrayList;
 
 public class Order {
-    private int order_id, table_no;
+    private String order_id, table_no;
     private double order_total;
-    private ArrayList<MenuItem> orderItemArrayList;
+    private ArrayList<OrderItem> orderItemArrayList;
     private String order_status;
 
     public Order() {
     }
 
-    public Order(int order_id, int table_no, double order_total, ArrayList<MenuItem> menuItems) {
+    public Order(String order_id, String table_no, double order_total, ArrayList<OrderItem> orderItems) {
         this.order_id = order_id;
         this.table_no = table_no;
         this.order_total = order_total;
-        this.orderItemArrayList = menuItems;
+        this.orderItemArrayList = orderItems;
         this.order_status = "Not Paid";
     }
 
@@ -27,19 +27,19 @@ public class Order {
         this.order_status = order_status;
     }
 
-    public int getOrder_id() {
+    public String getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(int order_id) {
+    public void setOrder_id(String order_id) {
         this.order_id = order_id;
     }
 
-    public int getTable_no() {
+    public String getTable_no() {
         return table_no;
     }
 
-    public void setTable_no(int table_no) {
+    public void setTable_no(String table_no) {
         this.table_no = table_no;
     }
 
@@ -51,11 +51,11 @@ public class Order {
         this.order_total = order_total;
     }
 
-    public ArrayList<MenuItem> getOrderItemArrayList() {
+    public ArrayList<OrderItem> getOrderItemArrayList() {
         return orderItemArrayList;
     }
 
-    public void setOrderItemArrayList(ArrayList<MenuItem> orderItemArrayList) {
+    public void setOrderItemArrayList(ArrayList<OrderItem> orderItemArrayList) {
         this.orderItemArrayList = orderItemArrayList;
     }
 }

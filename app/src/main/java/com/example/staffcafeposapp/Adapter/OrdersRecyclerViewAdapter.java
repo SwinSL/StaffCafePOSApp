@@ -47,7 +47,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         vHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopup(orderList.get(vHolder.getAdapterPosition()).getOrderItemArrayList());
+                showPopup(orderList.get(vHolder.getAdapterPosition()));
             }
         });
 
@@ -86,13 +86,13 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         }
     }
 
-    private void showPopup(ArrayList<MenuItem> orderItemArrayList) {
+    private void showPopup(Order order) {
         @SuppressLint("InflateParams") final View popupView = LayoutInflater.from(context).inflate(R.layout.orders_popup_window, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
 
         RecyclerView recyclerView = popupView.findViewById(R.id.orders_popup_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
-        PopupOrdersRecyclerViewAdapter adapter = new PopupOrdersRecyclerViewAdapter(context, orderItemArrayList);
+        PopupOrdersRecyclerViewAdapter adapter = new PopupOrdersRecyclerViewAdapter(context, order);
 
         TextView order_total = popupView.findViewById(R.id.orders_total_data);
         order_total.setText(adapter.getOrder_total());
