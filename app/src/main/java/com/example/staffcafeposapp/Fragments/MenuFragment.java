@@ -2,11 +2,9 @@ package com.example.staffcafeposapp.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,21 +16,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffcafeposapp.Adapter.Beverages_Adapter;
 import com.example.staffcafeposapp.Adapter.MenuAdapter;
-import com.example.staffcafeposapp.Model.Beverages;
-import com.example.staffcafeposapp.Model.Food;
+import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class MenuFragment extends Fragment {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference foodCollectionReference = db.collection("Food");
+    private CollectionReference beveragesCollectionReference = db.collection("Drink");
+
+
     private RecyclerView food_recyclerView;
     private MenuAdapter food_Adapter;
-    private ArrayList<Food> foodList;
+    private ArrayList<MenuItem> foodArrayList;
 
     private RecyclerView beverages_recyclerView;
     private Beverages_Adapter beverages_Adapter;
-    private ArrayList<Beverages> beveragesArrayList;
+    private ArrayList<MenuItem> beveragesArrayList;
 
 
     @Nullable
@@ -46,34 +58,57 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        foodArrayList = new ArrayList<>();
+        beveragesArrayList = new ArrayList<>();
+        getMenu();
+
         //Food Recycler View
         food_recyclerView = view.findViewById(R.id.recyclerView_Food);
         food_recyclerView.setHasFixedSize(true);
         food_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-        foodList = new ArrayList<>();
-
-        foodList.add(new Food("Chicken", 20));
-        foodList.add(new Food("Fish", 21));
-        foodList.add(new Food("Fried Rice", 15));
-        foodList.add(new Food("Noddles", 10));
-
-        food_Adapter = new MenuAdapter(this.getContext(), foodList);
+        food_Adapter = new MenuAdapter(this.getContext(),foodArrayList);
         food_recyclerView.setAdapter(food_Adapter);
 
-        //Beverages RecyclerView
         beverages_recyclerView = view.findViewById(R.id.recyclerView_Beverages);
         beverages_recyclerView.setHasFixedSize(true);
         beverages_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-        beveragesArrayList = new ArrayList<>();
-        beveragesArrayList.add(new Beverages("Coffee", 6));
-        beveragesArrayList.add(new Beverages("Lemonade", 5));
-        beveragesArrayList.add(new Beverages("Hot chocolate", 7));
-        beveragesArrayList.add(new Beverages("Milkshake", 10));
-        beveragesArrayList.add(new Beverages("Water", 1));
-
-        beverages_Adapter = new Beverages_Adapter(this.getContext(), beveragesArrayList);
+        beverages_Adapter = new Beverages_Adapter(this.getContext(),beveragesArrayList);
         beverages_recyclerView.setAdapter(beverages_Adapter);
     }
+
+
+    private  void getMenu()
+    {
+        foodCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: task.getResult()){
+                        MenuItem food = document.toObject(MenuItem.class);
+                        foodArrayList.add(food);
+                        food_Adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+
+        beveragesCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: task.getResult()){
+                        MenuItem beverages = document.toObject(MenuItem.class);
+                        beveragesArrayList.add(beverages);
+                        beverages_Adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+    }
+
+
+
+
+
+
 }
