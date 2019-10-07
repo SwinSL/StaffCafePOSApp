@@ -2,6 +2,8 @@ package com.example.staffcafeposapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,7 +46,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
     private ArrayList<String> menuStringArray;
     private String[] menuArr;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Button addItemBtn;
+    private Button addItemBtn, paymentbtn;
     private Spinner menuSelectionSpinner;
     private EditText itemQuantitySel;
 
@@ -117,17 +119,18 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         menuSelectionSpinner = popupView.findViewById(R.id.orders_popup_spinner);
         addItemBtn = popupView.findViewById(R.id.orders_popup_addItembtn);
         itemQuantitySel = popupView.findViewById(R.id.orders_popup_quantitySel);
+        paymentbtn = popupView.findViewById(R.id.payment_button);
 
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String selItem = menuSelectionSpinner.getSelectedItem().toString();
-                int quantity = 0;
+                int quantity;
                 if(!itemQuantitySel.getText().toString().isEmpty()) {
                     quantity = Integer.parseInt(itemQuantitySel.getText().toString());
 
                     for(MenuItem menu: menuItemArrayList){
-                        if(menu.getItem_name() == selItem){
+                        if(menu.getItem_name().equals(selItem)){
                             OrderItem orderItem = new OrderItem(menu.getItem_name(), menu.getItem_price(), quantity);
                             order.getOrderItemArrayList().add(orderItem);
                             adapter.notifyDataSetChanged();
@@ -153,7 +156,44 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
+        paymentbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                @SuppressLint("InflateParams") final View paymentView = LayoutInflater.from(context).inflate(R.layout.payment_window, null);
+                final PopupWindow paymentWindow = new PopupWindow(paymentView, 400,WindowManager.LayoutParams.WRAP_CONTENT);
 
+                TextView total = paymentView.findViewById(R.id.payment_total_data);
+                total.setText(adapter.getOrder_total());
+
+                final TextView change_text = paymentView.findViewById(R.id.calculate_change_data);
+
+                final EditText amountPaid = paymentView.findViewById(R.id.amount_paid_input);
+                amountPaid.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if(!change_text.getText().toString().isEmpty()) {
+                            double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
+                            change_text.setText(String.valueOf(change));
+                        }
+                    }
+                });
+
+                paymentWindow.setOutsideTouchable(true);
+                paymentWindow.setFocusable(true);
+                paymentWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+            }
+        });
     }
 
 

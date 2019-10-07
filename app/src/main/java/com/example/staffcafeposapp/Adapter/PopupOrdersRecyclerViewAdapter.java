@@ -62,9 +62,10 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
             @Override
             public void onClick(View view) {
                 order.getOrderItemArrayList().remove(holder.getAdapterPosition());
+                total_textview.setText(getOrder_total());
                 updateOrderItem();
                 notifyItemRemoved(holder.getAdapterPosition());
-                total_textview.setText(getOrder_total());
+
             }
         });
     }
@@ -98,6 +99,8 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
             order_total+=(item.getItem_price()*item.getItem_quantity());
         }
 
+        order.setOrder_total(order_total);
+
         String total = String.format("%.2f", order_total);
         total = "RM" + total;
 
@@ -106,7 +109,6 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
 
     public void updateOrderItem(){
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
-
         documentReference.set(order);
     }
 
