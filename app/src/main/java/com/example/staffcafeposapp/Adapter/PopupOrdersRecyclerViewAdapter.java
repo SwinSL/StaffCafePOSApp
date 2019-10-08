@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
     private double order_total;
     private Order order;
     private TextView total_textview;
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -61,10 +63,14 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         holder.removebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                order.getOrderItemArrayList().remove(holder.getAdapterPosition());
-                total_textview.setText(getOrder_total());
-                updateOrderItem();
-                notifyItemRemoved(holder.getAdapterPosition());
+                if(!order.getOrder_status().equals("Paid")) {
+                    order.getOrderItemArrayList().remove(holder.getAdapterPosition());
+                    total_textview.setText(getOrder_total());
+                    updateOrderItem();
+                    notifyItemRemoved(holder.getAdapterPosition());
+                }else{
+                    Toast.makeText(context, "Order has been paid.", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -110,6 +116,7 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
     public void updateOrderItem(){
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
+        notifyDataSetChanged();
     }
 
     public void getTotalTextview(TextView total_textview){

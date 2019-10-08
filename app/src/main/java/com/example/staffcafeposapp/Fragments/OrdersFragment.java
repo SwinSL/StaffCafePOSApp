@@ -45,8 +45,6 @@ public class OrdersFragment extends Fragment {
     private ArrayList<Order> orderArrayList;
     private ArrayList<MenuItem> menuArrayList;
 
-    private ArrayList<MenuItem> foodMenu, drinkMenu;
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Orders");
 
@@ -94,7 +92,7 @@ public class OrdersFragment extends Fragment {
         });
     }
 
-    private void setOrders(){
+    /*private void setOrders(){
         OrderItem orderItem = new OrderItem("Ice Lemon Tea", 5, 1);
         ArrayList<OrderItem> orderlist = new ArrayList<>();
         orderlist.add(orderItem);
@@ -112,7 +110,7 @@ public class OrdersFragment extends Fragment {
                 Log.w("TAG", "Error writing document", e);
             }
         });
-    }
+    }*/
 
     private void fetchMenu(){
         menuArrayList = new ArrayList<>();
