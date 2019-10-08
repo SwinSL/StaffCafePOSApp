@@ -41,7 +41,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         MenuItem food =  foodList.get(position);
 
         holder.textView_food.setText(String.valueOf(food.getItem_name()));
-        holder.textView_foodPrice.setText(String.valueOf(food.getItem_price()));
+        holder.textView_foodPrice.setText(String.format("%.2f",food.getItem_price()));
 
     }
 

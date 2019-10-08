@@ -21,7 +21,7 @@
         android:id="@+id/textView_foodPrice_tong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/textView_food_tong"
         android:text="price"
@@ -69,14 +69,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="114dp" />
+        app:layout_constraintGuide_begin="122dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="174dp" />
+        app:layout_constraintGuide_begin="203dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

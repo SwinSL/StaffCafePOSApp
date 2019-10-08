@@ -39,7 +39,7 @@ public class Beverages_Adapter extends RecyclerView.Adapter<Beverages_Adapter.Vi
         MenuItem beverages = beveragesList.get(position);
 
         holder.textView_beverages.setText(String.valueOf(beverages.getItem_name()));
-        holder.textView_beveragesPrice.setText(String.valueOf(beverages.getItem_price()));
+        holder.textView_beveragesPrice.setText(String.format("%.2f",beverages.getItem_price()));
 
 
     }
