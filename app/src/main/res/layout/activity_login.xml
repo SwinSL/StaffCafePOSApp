@@ -80,6 +80,15 @@
         app:layout_constraintTop_toTopOf="@id/textView_pass"
         app:layout_constraintBottom_toBottomOf="@id/textView_pass"/>
 
+    <TextView
+        android:id="@+id/textView_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Error Message"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="@id/editText_pass"
+        app:layout_constraintTop_toBottomOf="@id/editText_pass"/>
+
     <Button
         android:id="@+id/button_login"
         android:layout_width="200dp"
