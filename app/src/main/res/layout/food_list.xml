@@ -2,7 +2,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,9 +9,8 @@
         android:id="@+id/textView_food_tong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
-        android:text="food"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,10 +19,9 @@
         android:id="@+id/textView_foodPrice_tong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/textView_food_tong"
-        android:text="price"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,9 +30,9 @@
         android:id="@+id/button_decrease"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="45dp"
         android:layout_toEndOf="@+id/textView_foodPrice_tong"
-        android:text="-"
+        android:text="@string/minus"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,10 +41,9 @@
         android:id="@+id/textView_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/button_decrease"
-        android:text="0"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/button_decrease"
@@ -57,9 +53,9 @@
         android:id="@+id/button_increase"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:layout_toEndOf="@+id/textView_quantity"
-        android:text="+"
+        android:text="@string/plus"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/textView_quantity"
         app:layout_constraintTop_toTopOf="parent" />

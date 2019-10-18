@@ -10,11 +10,12 @@
         android:id="@+id/textView_nav_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="16dp"
         android:text="@string/food"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:fontFamily="@font/raleway"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,19 +23,20 @@
         android:id="@+id/textView_nav_Beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="16dp"
         android:text="@string/beverages"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView_nav_food"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintStart_toEndOf="@+id/guideline_beverages"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_Food"
         android:layout_width="400dp"
         android:layout_height="665dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_nav_food" />
 
@@ -42,7 +44,7 @@
         android:id="@+id/recyclerView_Beverages"
         android:layout_width="400dp"
         android:layout_height="665dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_Food"
         app:layout_constraintTop_toBottomOf="@+id/textView_nav_Beverages" />
 
@@ -50,11 +52,11 @@
         android:id="@+id/textView_titleName_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="10dp"
         android:text="@string/name"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
         app:layout_constraintStart_toStartOf="@+id/guideline_food" />
 
@@ -62,11 +64,11 @@
         android:id="@+id/textView_titlePrice_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="50dp"
         android:layout_marginBottom="10dp"
         android:text="@string/price_rm"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
         app:layout_constraintStart_toEndOf="@+id/textView_titleName_food" />
 
@@ -74,11 +76,11 @@
         android:id="@+id/textView_titleQuantity_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
+        android:layout_marginStart="65dp"
         android:layout_marginBottom="10dp"
         android:text="@string/item_quantity"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
         app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_food" />
 
@@ -93,11 +95,11 @@
         android:id="@+id/textView_titleName_beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="10dp"
         android:text="@string/name"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
         app:layout_constraintStart_toStartOf="@+id/guideline_beverages" />
 
@@ -105,11 +107,11 @@
         android:id="@+id/textView_titlePrice_beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="50dp"
         android:layout_marginBottom="10dp"
         android:text="@string/price_rm"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
         app:layout_constraintStart_toEndOf="@+id/textView_titleName_beverages" />
 
@@ -117,11 +119,11 @@
         android:id="@+id/textView_titleQuantity_beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
+        android:layout_marginStart="65dp"
         android:layout_marginBottom="10dp"
         android:text="@string/quantity"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        android:textSize="16sp"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
         app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_beverages" />
 
@@ -136,11 +138,10 @@
         android:id="@+id/textView_OrderSummaryMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="35dp"
         android:text="@string/order_summary"
-        android:textSize="40sp"
-        android:textStyle="italic|bold"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/guideline_orderSummary"
@@ -158,23 +159,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="100dp"
         android:text="@string/item_quantity"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView_osDetails"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintStart_toEndOf="@+id/textView_osName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_osDetails"
+        android:id="@+id/textView_osName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="144dp"
-        android:text="@string/order_details"
-        android:textSize="20sp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/item_name"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline_orderSummary"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintStart_toEndOf="@+id/guideline_orderSummary"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -182,12 +185,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="100dp"
         android:text="@string/subtotal"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/raleway"
         app:layout_constraintStart_toEndOf="@+id/textView_osQuantity"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_orderSummary"
+        android:layout_width="480dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toEndOf="@+id/guideline_orderSummary"
+        app:layout_constraintTop_toBottomOf="@+id/textView_osName"
+        app:layout_constraintBottom_toTopOf="@id/view_line_total"
+        />
 
     <TextView
         android:id="@+id/textView_osTotalPrice"
@@ -198,6 +213,7 @@
         android:text="@string/total"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_orderSummary" />
 
@@ -207,6 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/submit"
+        android:fontFamily="@font/raleway"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_Beverages" />

@@ -1,5 +1,7 @@
 package com.example.staffcafeposapp.Model;
 
+import androidx.annotation.Nullable;
+
 public class OrderItem extends MenuItem {
     private int item_quantity;
 
@@ -17,5 +19,10 @@ public class OrderItem extends MenuItem {
 
     public void setItem_quantity(int item_quantity) {
         this.item_quantity = item_quantity;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return (this.getItem_name().equals(((OrderItem) obj).getItem_name()));
     }
 }

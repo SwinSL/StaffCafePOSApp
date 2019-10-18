@@ -34,5 +34,7 @@
     <string name="member_id">Member ID:</string>
     <string name="change">Change:</string>
     <string name="confirm">Confirm</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
 
 </resources>
