@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,25 +47,37 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
 
-                        if(user.getUsername().equals(username))
-                        {
-                            if(user.getPassword().equals(pass))
-                            {
-                                textView_error.setText(null);
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                                Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
-                            }
+                        if(TextUtils.isEmpty(username)){
+                            textView_error.setText("Username is empty");
+                            Toast.makeText(getApplicationContext(),"Please enter username",Toast.LENGTH_SHORT).show();
 
+                        }
+
+                        else if(TextUtils.isEmpty(pass)){
+                            textView_error.setText("Password is empty");
+                            Toast.makeText(getApplicationContext(),"Please enter password",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            if(user.getUsername().equals(username))
+                            {
+                                if(user.getPassword().equals(pass))
+                                {
+                                    textView_error.setText(null);
+                                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                    Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+                                }
+
+                                else
+                                {
+                                    textView_error.setText("Wrong password");
+                                    Toast.makeText(getApplicationContext(),"Wrong password",Toast.LENGTH_SHORT).show();
+                                }
+                            }
                             else
                             {
-                                textView_error.setText("Wrong password");
-                                Toast.makeText(getApplicationContext(),"Wrong password",Toast.LENGTH_SHORT).show();
+                                textView_error.setText("User do not exist");
+                                Toast.makeText(getApplicationContext(),"User do not exist",Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else
-                        {
-                            textView_error.setText("User do not exist");
-                            Toast.makeText(getApplicationContext(),"User do not exist",Toast.LENGTH_SHORT).show();
                         }
                     }
 
