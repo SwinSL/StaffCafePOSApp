@@ -77,7 +77,12 @@ public class MenuFragment extends Fragment {
                 if(selectedMenuItemList.contains(selectedFood)){
                     for(OrderItem item: selectedMenuItemList){
                         if(item.getItem_name().equals(selectedFood.getItem_name())){
-                            item.setItem_quantity(selectedFood.getItem_quantity());
+                            if(item.getItem_quantity() == 0){
+                                selectedMenuItemList.remove(item);
+                                break;
+                            }else {
+                                item.setItem_quantity(selectedFood.getItem_quantity());
+                            }
                         }
                     }
                 }else{
@@ -97,7 +102,12 @@ public class MenuFragment extends Fragment {
                 if(selectedMenuItemList.contains(selectedBeverage)){
                     for(OrderItem item: selectedMenuItemList){
                         if(item.getItem_name().equals(selectedBeverage.getItem_name())){
-                            item.setItem_quantity(selectedBeverage.getItem_quantity());
+                            if(item.getItem_quantity() == 0){
+                                selectedMenuItemList.remove(item);
+                                break;
+                            }else {
+                                item.setItem_quantity(selectedBeverage.getItem_quantity());
+                            }
                         }
                     }
                 }else{

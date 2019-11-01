@@ -59,10 +59,12 @@ public class Beverages_Adapter extends RecyclerView.Adapter<Beverages_Adapter.Vi
         holder.button_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                orderItem.setItem_quantity(orderItem.getItem_quantity()-1);
-                holder.textView_quantity.setText(String.valueOf(orderItem.getItem_quantity()));
+                if(orderItem.getItem_quantity() != 0){
+                    orderItem.setItem_quantity(orderItem.getItem_quantity()-1);
+                    holder.textView_quantity.setText(String.valueOf(orderItem.getItem_quantity()));
 
-                beverageListener.onDataSent(orderItem);
+                    beverageListener.onDataSent(orderItem);
+                }
             }
         });
     }

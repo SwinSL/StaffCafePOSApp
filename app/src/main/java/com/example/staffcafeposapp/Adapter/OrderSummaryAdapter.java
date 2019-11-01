@@ -36,7 +36,7 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
 
         holder.orderSummary_itemName.setText(orderitem.getItem_name());
         holder.orderSummary_itemQuantity.setText(String.valueOf(orderitem.getItem_quantity()));
-        holder.orderSummary_itemPrice.setText(String.valueOf(orderitem.getItem_price()));
+        holder.orderSummary_itemPrice.setText(String.valueOf(orderitem.getItem_price()*orderitem.getItem_quantity()));
     }
 
     @Override

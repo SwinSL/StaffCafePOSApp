@@ -61,10 +61,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         holder.button_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                orderItem.setItem_quantity(orderItem.getItem_quantity()-1);
-                holder.textView_quantity.setText(String.valueOf(orderItem.getItem_quantity()));
+                if(orderItem.getItem_quantity() != 0){
+                    orderItem.setItem_quantity(orderItem.getItem_quantity()-1);
+                    holder.textView_quantity.setText(String.valueOf(orderItem.getItem_quantity()));
 
-                foodListener.onDataSent(orderItem);
+                    foodListener.onDataSent(orderItem);
+                }
             }
         });
     }
