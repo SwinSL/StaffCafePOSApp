@@ -3,8 +3,7 @@ package com.example.staffcafeposapp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.text.TextWatcher;;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,19 +21,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staffcafeposapp.Model.Members;
 import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
 import com.example.staffcafeposapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecyclerViewAdapter.ViewHolder> {
@@ -47,6 +46,9 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
     private Button addItemBtn, paymentbtn;
     private Spinner menuSelectionSpinner;
     private EditText itemQuantitySel;
+    private FirebaseDatabase memberdb;
+    private DatabaseReference databaseReference;
+    private Double member_price = 1.0;
 
     public OrdersRecyclerViewAdapter(Context context, List<Order> orderList, ArrayList<MenuItem> menuItemArrayList) {
         this.context = context;
@@ -186,9 +188,55 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         @Override
                         public void afterTextChanged(Editable editable) {
                             if (!amountPaid.getText().toString().isEmpty()) {
-                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
+                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
                                 change_text.setText(String.valueOf(change));
                             }
+                        }
+                    });
+
+                    final TextView member_status = paymentView.findViewById(R.id.tv_member);
+                    final EditText memberID = paymentView.findViewById(R.id.member_id_input);
+                    memberID.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(final Editable editable) {
+                            final String ID = memberID.getText().toString();
+                            memberdb = FirebaseDatabase.getInstance();
+                            databaseReference = memberdb.getReference().child("Member");
+                            final Query query = databaseReference.orderByChild("id").equalTo(ID);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                                    {
+                                        Members members = dataSnapshot1.getValue(Members.class);
+
+                                        if(ID.equals(members.getID()))
+                                        {
+                                            member_price = 0.9;
+                                            if (!amountPaid.getText().toString().isEmpty()) {
+                                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
+                                                change_text.setText(String.valueOf(change));
+                                                member_status.setText("Member exist");
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     });
 
