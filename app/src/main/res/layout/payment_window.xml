@@ -93,6 +93,14 @@
         />
 
     <TextView
+        android:id="@+id/tv_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/member_id_input"
+        app:layout_constraintStart_toStartOf="@id/member_id_input"
+        android:fontFamily="@font/raleway"/>
+
+    <TextView
         android:id="@+id/calculate_change_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
