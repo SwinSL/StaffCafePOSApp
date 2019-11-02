@@ -1,15 +1,22 @@
 package com.example.staffcafeposapp.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,19 +25,27 @@ import com.example.staffcafeposapp.Adapter.Beverages_Adapter;
 import com.example.staffcafeposapp.Adapter.MenuAdapter;
 import com.example.staffcafeposapp.Adapter.OrderSummaryAdapter;
 import com.example.staffcafeposapp.Model.MenuItem;
+import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
 import com.example.staffcafeposapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MenuFragment extends Fragment {
 
@@ -50,6 +65,11 @@ public class MenuFragment extends Fragment {
     private RecyclerView orderSummary_recyclerView;
     private ArrayList<OrderItem> selectedMenuItemList;
     private OrderSummaryAdapter orderSummary_adapter;
+    private TextView totalPrice_textView;
+    private EditText tableNo_editText;
+    private Button submitButton;
+    private double total;
+    private String todayString;
 
     @Nullable
     @Override
@@ -89,6 +109,7 @@ public class MenuFragment extends Fragment {
                     selectedMenuItemList.add(selectedFood);
                 }
                 orderSummary_adapter.notifyDataSetChanged();
+                setOrderTotal();
             }
         });
         food_recyclerView.setAdapter(food_Adapter);
@@ -114,6 +135,7 @@ public class MenuFragment extends Fragment {
                     selectedMenuItemList.add(selectedBeverage);
                 }
                 orderSummary_adapter.notifyDataSetChanged();
+                setOrderTotal();
             }
         });
         beverages_recyclerView.setAdapter(beverages_Adapter);
@@ -124,6 +146,41 @@ public class MenuFragment extends Fragment {
         orderSummary_adapter = new OrderSummaryAdapter(this.getContext(), selectedMenuItemList);
         orderSummary_recyclerView.setAdapter(orderSummary_adapter);
 
+        tableNo_editText = view.findViewById(R.id.editText_tableNoInput);
+        totalPrice_textView = view.findViewById(R.id.textView_totalPrice);
+        submitButton = view.findViewById(R.id.button_orderSubmit);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedMenuItemList.size() > 0 && !tableNo_editText.getText().toString().isEmpty()) {
+                    Date todayDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+                    todayString = formatter.format(todayDate);
+
+                    final int[] dailyOrderCounter = {0};
+                    CollectionReference collectionReference = db.collection("Orders");
+                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DocumentSnapshot document : task.getResult()) {
+                                    Order order = document.toObject(Order.class);
+
+                                    if (order.getOrder_date().equals(todayString)) {
+                                        dailyOrderCounter[0]++;
+                                    }
+                                }
+
+                                submitOrder(dailyOrderCounter[0]);
+                            }
+                        }
+                    });
+                }else{
+                    Toast.makeText(getContext(), "Select at least 1 item and enter table no.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void getMenu()
@@ -155,4 +212,25 @@ public class MenuFragment extends Fragment {
         });
     }
 
+
+    private void setOrderTotal(){
+        total = 0;
+        for(OrderItem item: selectedMenuItemList){
+            total += (item.getItem_quantity()*item.getItem_price());
+        }
+
+        totalPrice_textView.setText(String.format("RM%s", total));
+    }
+
+    private void submitOrder(int noOfDailyOrder){
+        Order order = new Order(todayString + "-" + (noOfDailyOrder+1), tableNo_editText.getText().toString(), total, selectedMenuItemList, todayString);
+        DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
+        documentReference.set(order);
+        Toast.makeText(getContext(), "Order Successful!", Toast.LENGTH_SHORT).show();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new OrdersFragment());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }

@@ -1,22 +1,28 @@
 package com.example.staffcafeposapp.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
     private String order_id, table_no;
     private double order_total;
     private ArrayList<OrderItem> orderItemArrayList;
-    private String order_status;
+    private String order_status, order_date;
 
     public Order() {
     }
 
-    public Order(String order_id, String table_no, double order_total, ArrayList<OrderItem> orderItems) {
+    public Order(String order_id, String table_no, double order_total, ArrayList<OrderItem> orderItems, String date) {
         this.order_id = order_id;
         this.table_no = table_no;
         this.order_total = order_total;
         this.orderItemArrayList = orderItems;
         this.order_status = "Not Paid";
+        this.order_date = date;
+    }
+
+    public String getOrder_date() {
+        return order_date;
     }
 
     public String getOrder_status() {

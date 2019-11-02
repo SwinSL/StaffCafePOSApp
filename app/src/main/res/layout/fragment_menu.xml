@@ -205,6 +205,34 @@
         />
 
     <TextView
+        android:id="@+id/textView_tableNoInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/table_no"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_orderSummary" />
+
+    <EditText
+        android:id="@+id/editText_tableNoInput"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:inputType="text"
+        android:hint="@string/eg_a001"
+        android:fontFamily="@font/raleway"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView_tableNoInput"
+        />
+
+    <TextView
         android:id="@+id/textView_osTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -217,8 +245,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_orderSummary" />
 
+    <TextView
+        android:id="@+id/textView_totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@null"
+        android:fontFamily="@font/raleway"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView_osTotalPrice"
+        />
+
     <Button
-        android:id="@+id/button_submit"
+        android:id="@+id/button_orderSubmit"
         android:layout_width="470dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

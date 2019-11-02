@@ -36,5 +36,6 @@
     <string name="confirm">Confirm</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
+    <string name="eg_a001">eg. A001</string>
 
 </resources>
