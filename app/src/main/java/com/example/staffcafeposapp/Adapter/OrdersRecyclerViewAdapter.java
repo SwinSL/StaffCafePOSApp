@@ -2,6 +2,7 @@ package com.example.staffcafeposapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;;
 import android.view.Gravity;
@@ -49,6 +50,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
     private FirebaseDatabase memberdb;
     private DatabaseReference databaseReference;
     private Double member_price = 1.0;
+    private String  myMember;
 
     public OrdersRecyclerViewAdapter(Context context, List<Order> orderList, ArrayList<MenuItem> menuItemArrayList) {
         this.context = context;
@@ -188,12 +190,14 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         @Override
                         public void afterTextChanged(Editable editable) {
                             if (!amountPaid.getText().toString().isEmpty()) {
-                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
-                                change_text.setText(String.valueOf(change));
+                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
+                                change_text.setText(String.format("%.2f",change));
                             }
                         }
                     });
 
+                    final TextView discount = paymentView.findViewById(R.id.tv_discount);
+                    final TextView discount_total = paymentView.findViewById(R.id.tv_totalDiscount);
                     final TextView member_status = paymentView.findViewById(R.id.tv_member);
                     final EditText memberID = paymentView.findViewById(R.id.member_id_input);
                     memberID.addTextChangedListener(new TextWatcher() {
@@ -204,11 +208,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
                         @Override
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(final Editable editable) {
                             final String ID = memberID.getText().toString();
                             memberdb = FirebaseDatabase.getInstance();
                             databaseReference = memberdb.getReference().child("Member");
@@ -222,21 +221,39 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
                                         if(ID.equals(members.getID()))
                                         {
+                                            myMember = members.getID();
                                             member_price = 0.9;
                                             if (!amountPaid.getText().toString().isEmpty()) {
                                                 double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
-                                                change_text.setText(String.valueOf(change));
-                                                member_status.setText("Member exist");
+                                                change_text.setText(String.format("%.2f",change));
                                             }
+                                            member_status.setText("Member exist");
+                                            member_status.setTextColor(Color.GREEN);
+                                            discount.setVisibility(View.VISIBLE);
+                                            discount_total.setText(String.format("%.2f",order.getOrder_total() * 0.1));
                                         }
+
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                                 }
                             });
+                        }
+
+                        @Override
+                        public void afterTextChanged(final Editable editable) {
+                            if(editable.toString()!= myMember){
+                                if (!amountPaid.getText().toString().isEmpty()) {
+                                    double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
+                                    change_text.setText(String.format("%.2f",change));
+                                }
+                                discount_total.setText(null);
+                                member_status.setTextColor(Color.RED);
+                                member_status.setText("Member do not exist");
+                                discount.setVisibility(View.INVISIBLE);
+                            }
                         }
                     });
 

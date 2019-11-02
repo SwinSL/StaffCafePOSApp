@@ -40,5 +40,6 @@
     <string name="number_of_seats">Number Of Seats</string>
     <string name="table_status">Table Status</string>
     <string name="eg_a001">eg. A001</string>
+    <string name="discount_10">Discount 10%</string>
 
 </resources>
