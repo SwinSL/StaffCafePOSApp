@@ -23,4 +23,16 @@ public class Tables {
     public int getTableNoOfSeat() {
         return tableNoOfSeat;
     }
+
+    public void setTableNo(String tableNo) {
+        this.tableNo = tableNo;
+    }
+
+    public void setTableStatus(String tableStatus) {
+        this.tableStatus = tableStatus;
+    }
+
+    public void setTableNoOfSeat(int tableNoOfSeat) {
+        this.tableNoOfSeat = tableNoOfSeat;
+    }
 }

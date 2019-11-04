@@ -42,4 +42,10 @@
     <string name="eg_a001">eg. A001</string>
     <string name="discount_10">Discount 10%</string>
 
+
+    <string-array name="table_status">
+        <item>Available</item>
+        <item>Unavailable</item>
+    </string-array>
+
 </resources>
