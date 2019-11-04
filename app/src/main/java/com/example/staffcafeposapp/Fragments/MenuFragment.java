@@ -1,5 +1,7 @@
 package com.example.staffcafeposapp.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -154,28 +156,40 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (selectedMenuItemList.size() > 0 && !tableNo_editText.getText().toString().isEmpty()) {
-                    Date todayDate = Calendar.getInstance().getTime();
-                    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
-                    todayString = formatter.format(todayDate);
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Submit Order")
+                            .setMessage("Are you sure you want to submit this order?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Date todayDate = Calendar.getInstance().getTime();
+                                    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+                                    todayString = formatter.format(todayDate);
 
-                    final int[] dailyOrderCounter = {0};
-                    CollectionReference collectionReference = db.collection("Orders");
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (DocumentSnapshot document : task.getResult()) {
-                                    Order order = document.toObject(Order.class);
+                                    final int[] dailyOrderCounter = {0};
+                                    CollectionReference collectionReference = db.collection("Orders");
+                                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (DocumentSnapshot document : task.getResult()) {
+                                                    Order order = document.toObject(Order.class);
 
-                                    if (order.getOrder_date().equals(todayString)) {
-                                        dailyOrderCounter[0]++;
-                                    }
+                                                    if (order.getOrder_date().equals(todayString)) {
+                                                        dailyOrderCounter[0]++;
+                                                    }
+                                                }
+
+                                                submitOrder(dailyOrderCounter[0]);
+                                            }
+                                        }
+                                    });
                                 }
 
-                                submitOrder(dailyOrderCounter[0]);
-                            }
-                        }
-                    });
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
                 }else{
                     Toast.makeText(getContext(), "Select at least 1 item and enter table no.", Toast.LENGTH_SHORT).show();
                 }
