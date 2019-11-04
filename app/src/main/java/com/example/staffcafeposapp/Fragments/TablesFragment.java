@@ -15,6 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.staffcafeposapp.Adapter.TablesRecyclerViewAdapter;
 import com.example.staffcafeposapp.Model.Tables;
 import com.example.staffcafeposapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -24,6 +30,10 @@ public class TablesFragment extends Fragment {
     private RecyclerView table_recyclerView;
     private TablesRecyclerViewAdapter table_Adapter;
     private ArrayList<Tables> tablesArrayList;
+
+    //Database
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference tableCollectionReference = db.collection("Tables");
 
     @Nullable
     @Override
@@ -36,17 +46,7 @@ public class TablesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tablesArrayList = new ArrayList<>();
-
-        tablesArrayList.add(new Tables("A001", 4, "Available"));
-        tablesArrayList.add(new Tables("A002", 4, "Available"));
-        tablesArrayList.add(new Tables("A003", 6, "Available"));
-        tablesArrayList.add(new Tables("A004", 2, "Available"));
-        tablesArrayList.add(new Tables("A005", 10, "Available"));
-        tablesArrayList.add(new Tables("A005", 10, "Available"));
-        tablesArrayList.add(new Tables("A005", 10, "Available"));
-        tablesArrayList.add(new Tables("A005", 10, "Available"));
-        tablesArrayList.add(new Tables("A005", 10, "Available"));
-
+        getTableInfo();
         table_recyclerView =view.findViewById(R.id.recyclerView_Tables);
         table_recyclerView.setHasFixedSize(true);
         table_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -54,6 +54,24 @@ public class TablesFragment extends Fragment {
         table_recyclerView.setAdapter(table_Adapter);
         table_recyclerView.addItemDecoration(new DividerItemDecoration(table_recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-
     }
+
+    private void getTableInfo()
+    {
+        tableCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: task.getResult())
+                    {
+                        Tables tables = document.toObject(Tables.class);
+                        tablesArrayList.add(tables);
+                        table_Adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+    }
+
+
 }
