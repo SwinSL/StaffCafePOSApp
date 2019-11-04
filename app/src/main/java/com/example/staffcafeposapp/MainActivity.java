@@ -4,8 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.staffcafeposapp.Fragments.MenuFragment;
 import com.example.staffcafeposapp.Fragments.OrdersFragment;
@@ -47,7 +53,45 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setTitle("Logout")
+                .setMessage("Are you sure?")
+                .setNegativeButton("No",null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        builder.show();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Logout")
+                .setMessage("Are you sure?")
+                .setNegativeButton("No",null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        builder.show();
+        return true;
+    }
 }
 
