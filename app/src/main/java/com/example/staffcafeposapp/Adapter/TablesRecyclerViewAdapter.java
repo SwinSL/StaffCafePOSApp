@@ -1,6 +1,7 @@
 package com.example.staffcafeposapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,17 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffcafeposapp.Model.Tables;
 import com.example.staffcafeposapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecyclerViewAdapter.ViewHolder> implements AdapterView.OnItemSelectedListener {
 
@@ -36,6 +31,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
     private Spinner statusSpinner;
     private Button button_confirmStatus;
     private String tableStatus;
+    private TextView textView_popup_tableNo;
 
     public TablesRecyclerViewAdapter(Context context, ArrayList<Tables> tablesArrayList) {
         this.context = context;
@@ -45,7 +41,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
     @NonNull
     @Override
     public TablesRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, final int viewType) {
-        View view = LayoutInflater.from(this.context).inflate(R.layout.row_tables, parent,false);
+        View view = LayoutInflater.from(this.context).inflate(R.layout.table_item, parent,false);
         final ViewHolder holder =new ViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +58,20 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
         Tables tables = tablesArrayList.get(position);
         holder.textView_tableNo.setText(String.valueOf(tables.getTableNo()));
-        holder.textView_tableNoOfSeat.setText(String.valueOf(tables.getTableNoOfSeat()));
+        holder.textView_tableNoOfSeat.setText(String.valueOf("("+tables.getTableNoOfSeat() + ")"));
         holder.textView_tableStatus.setText(String.valueOf(tables.getTableStatus()));
 
+        String tablestatus = holder.textView_tableStatus.getText().toString();
+        System.out.println(tablestatus);
+
+        if(tablestatus.equals("Available"))
+        {
+            holder.textView_tableStatus.setTextColor(Color.GREEN);
+        }
+        else
+        {
+            holder.textView_tableStatus.setTextColor(Color.RED);
+        }
     }
 
     private void showPopup(final Tables tables)
@@ -82,8 +89,10 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
         statusSpinner.setAdapter(adapter);
         statusSpinner.setOnItemSelectedListener(this);
 
-        button_confirmStatus = popUpView.findViewById(R.id.button_confirmTableStatus);
+        textView_popup_tableNo = popUpView.findViewById(R.id.textView_popup_tableNumber);
+        textView_popup_tableNo.setText(tables.getTableNo());
 
+        button_confirmStatus = popUpView.findViewById(R.id.button_confirmTableStatus);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         button_confirmStatus.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +104,7 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
                 documentReference.set(tables);
                 notifyDataSetChanged();
                 popupWindow.dismiss();
+
 
             }
         });
@@ -108,7 +118,6 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         tableStatus = adapterView.getItemAtPosition(position).toString();
-        System.out.println(tableStatus);
     }
 
     @Override
@@ -118,14 +127,15 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textView_tableNo, textView_tableNoOfSeat, textView_tableStatus;
+        final TextView textView_tableNo, textView_tableNoOfSeat, textView_tableStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView_tableNo = itemView.findViewById(R.id.textView_tableNo);
-            textView_tableNoOfSeat = itemView.findViewById(R.id.textView_noOfSeat);
-            textView_tableStatus = itemView.findViewById(R.id.textView_table_status);
+            textView_tableNo = itemView.findViewById(R.id.textView_tableNumber);
+            textView_tableNoOfSeat = itemView.findViewById(R.id.textView_tableNoOfSeat);
+            textView_tableStatus = itemView.findViewById(R.id.textView_tablestatus);
+
         }
     }
 }

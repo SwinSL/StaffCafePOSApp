@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,8 +52,9 @@ public class TablesFragment extends Fragment {
         table_recyclerView.setHasFixedSize(true);
         table_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         table_Adapter = new TablesRecyclerViewAdapter(this.getContext(), tablesArrayList);
+        table_recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 4));
         table_recyclerView.setAdapter(table_Adapter);
-        table_recyclerView.addItemDecoration(new DividerItemDecoration(table_recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
 
     }
 

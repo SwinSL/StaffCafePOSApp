@@ -24,12 +24,10 @@
         android:id="@+id/spinner_popupTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="34dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView_popup_tableStatus"
-        app:layout_constraintStart_toStartOf="@+id/textView_popup_tableStatus"
-        app:layout_constraintTop_toBottomOf="@+id/textView_popup_tableStatus" />
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_popup_tableNumber"
+        app:layout_constraintStart_toStartOf="@+id/textView_popup_tableNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textView_popup_tableNumber" />
 
     <Button
         android:id="@+id/button_confirmTableStatus"
@@ -40,5 +38,16 @@
         app:layout_constraintEnd_toEndOf="@+id/spinner_popupTable"
         app:layout_constraintStart_toStartOf="@+id/spinner_popupTable"
         app:layout_constraintTop_toBottomOf="@+id/spinner_popupTable" />
+
+    <TextView
+        android:id="@+id/textView_popup_tableNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:textSize="18sp"
+        android:text="A001"
+        app:layout_constraintEnd_toEndOf="@+id/textView_popup_tableStatus"
+        app:layout_constraintStart_toStartOf="@+id/textView_popup_tableStatus"
+        app:layout_constraintTop_toBottomOf="@+id/textView_popup_tableStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

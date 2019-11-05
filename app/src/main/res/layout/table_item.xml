@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:layout_margin="5dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="10dp"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imageView_tablelayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/table" />
+
+            <TextView
+                android:id="@+id/textView_tableNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:fontFamily="@font/raleway"
+                android:textSize="40sp"
+                android:text="A001" />
+
+            <TextView
+                android:id="@+id/textView_tablestatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView_tablelayout"
+                android:fontFamily="@font/raleway"
+                android:textSize="30sp"
+                android:layout_centerHorizontal="true"
+                android:text="Available" />
+
+            <TextView
+                android:id="@+id/textView_tableNoOfSeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:layout_below="@+id/textView_tableNumber"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:text="(4)" />
+
+
+        </RelativeLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

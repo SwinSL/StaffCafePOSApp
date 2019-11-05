@@ -4,57 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F0F0F0">
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_Tables"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_titleNoOfSeat" />
-
-    <TextView
-        android:id="@+id/textView_titleTableNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="24dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/raleway"
-        android:text="@string/table_number"
-        android:textSize="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_titleNoOfSeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="24dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/raleway"
-        android:text="@string/number_of_seats"
-        android:textSize="40dp"
-        app:layout_constraintStart_toEndOf="@+id/textView_titleTableNo"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_titleTableStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="24dp"
-        android:textStyle="bold"
-        android:fontFamily="@font/raleway"
-        android:text="@string/table_status"
-        android:textSize="40dp"
-        app:layout_constraintStart_toEndOf="@+id/textView_titleNoOfSeat"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
