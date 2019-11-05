@@ -1,82 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="904dp"
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textview_orders_orderid_data"
+            android:layout_width="301dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textAlignment="center"/>
+
+        <View
+            android:id="@+id/OVerticalLine1"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:padding="12dp">
+            android:background="@android:color/black"/>
 
-            <TextView
-                android:id="@+id/textview_orders_orderid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/raleway"
-                android:text="@string/order_id"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/textview_orders_orderid_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/textview_orders_orderid"
-                android:textSize="20sp"
-                android:fontFamily="@font/raleway"
-                android:layout_marginStart="5dp"
-                />
+        <TextView
+            android:id="@+id/textview_orders_tableno_data"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+            android:fontFamily="@font/raleway"/>
 
-            <TextView
-                android:id="@+id/textview_orders_tableno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textview_orders_orderid"
-                android:layout_alignStart="@id/textview_orders_orderid"
-                android:fontFamily="@font/raleway"
-                android:text="@string/table_no"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/textview_orders_tableno_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/textview_orders_tableno"
-                android:layout_below="@id/textview_orders_orderid"
-                android:textSize="20sp"
-                android:fontFamily="@font/raleway"
-                android:layout_marginStart="5dp"
-                />
+        <View
+            android:id="@+id/OVerticalLine2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"/>
 
-            <TextView
-                android:id="@+id/textview_orders_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/textview_orders_orderid"
-                android:layout_toStartOf="@id/textview_orders_status_data"
-                android:fontFamily="@font/raleway"
-                android:text="@string/status"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/textview_orders_status_data"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+            android:fontFamily="@font/raleway"/>
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/textview_orders_status_data"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/raleway"
-                android:layout_alignBaseline="@id/textview_orders_status"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:textSize="20sp" />
-        </RelativeLayout>
+    <View
+        android:id="@+id/OHorizontalLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"/>
 
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
