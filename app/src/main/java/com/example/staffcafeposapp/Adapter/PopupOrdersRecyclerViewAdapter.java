@@ -4,30 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
 import com.example.staffcafeposapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOrdersRecyclerViewAdapter.ViewHolder> {
     private Context context;
@@ -38,7 +26,7 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
-    public PopupOrdersRecyclerViewAdapter(Context context, Order order) {
+    PopupOrdersRecyclerViewAdapter(Context context, Order order) {
         this.context = context;
         this.order = order;
     }
@@ -63,7 +51,7 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         holder.removebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!order.getOrder_status().equals("Paid")) {
+                if(!order.getIsPaid()) {
                     order.getOrderItemArrayList().remove(holder.getAdapterPosition());
                     total_textview.setText(getOrder_total());
                     updateOrderItem();
@@ -81,14 +69,14 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         return order.getOrderItemArrayList().size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView item_name;
         private TextView item_price;
         private TextView item_quantity;
         private Button removebtn;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             item_name = itemView.findViewById(R.id.orders_item_name);
@@ -98,7 +86,7 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         }
     }
 
-    public String getOrder_total() {
+    String getOrder_total() {
         order_total = 0;
 
         for(OrderItem item: order.getOrderItemArrayList()){
@@ -113,13 +101,13 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         return total;
     }
 
-    public void updateOrderItem(){
+    void updateOrderItem(){
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
         notifyDataSetChanged();
     }
 
-    public void getTotalTextview(TextView total_textview){
+    void getTotalTextview(TextView total_textview){
         this.total_textview = total_textview;
     }
 

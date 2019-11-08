@@ -41,6 +41,10 @@
     <string name="table_status">Table Status</string>
     <string name="eg_a001">eg. A001</string>
     <string name="discount_10">Discount 10%</string>
+    <string name="paid">Paid</string>
+    <string name="not_paid">Not Paid</string>
+    <string name="member_notexist">Member do not exist</string>
+    <string name="member_exist">Member exist</string>
 
 
     <string-array name="table_status">

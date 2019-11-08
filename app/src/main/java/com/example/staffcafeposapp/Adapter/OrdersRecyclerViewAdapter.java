@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
-import android.text.TextWatcher;;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +50,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
     private FirebaseDatabase memberdb;
     private DatabaseReference databaseReference;
     private Double member_price = 1.0;
-    private String  myMember;
+    private String myMember;
 
     public OrdersRecyclerViewAdapter(Context context, List<Order> orderList, ArrayList<MenuItem> menuItemArrayList) {
         this.context = context;
@@ -80,7 +80,11 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
         holder.order_id.setText(String.valueOf(order.getOrder_id()));
         holder.table_no.setText(String.valueOf(order.getTable_no()));
-        holder.order_status.setText(order.getOrder_status());
+        if(order.getIsPaid()){
+            holder.order_status.setText(R.string.paid);
+        }else{
+            holder.order_status.setText(R.string.not_paid);
+        }
     }
 
     @Override
@@ -90,13 +94,13 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView order_id;
-        public TextView table_no;
-        public TextView order_status;
+        TextView order_id;
+        TextView table_no;
+        TextView order_status;
         public View view;
 
 
-        public ViewHolder(@NonNull final View itemView) {
+        ViewHolder(@NonNull final View itemView) {
             super(itemView);
             view = itemView;
             order_id = itemView.findViewById(R.id.textview_orders_orderid_data);
@@ -127,7 +131,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!order.getOrder_status().equals("Paid")) {
+                if(!order.getIsPaid()) {
                     String selItem = menuSelectionSpinner.getSelectedItem().toString();
                     int quantity;
                     if (!itemQuantitySel.getText().toString().isEmpty()) {
@@ -165,7 +169,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         paymentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!order.getOrder_status().equals("Paid")) {
+                if (!order.getIsPaid()) {
                     popupWindow.dismiss();
                     @SuppressLint("InflateParams") final View paymentView = LayoutInflater.from(context).inflate(R.layout.payment_window, null);
                     final PopupWindow paymentWindow = new PopupWindow(paymentView, 400, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -203,7 +207,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     memberID.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                         }
 
                         @Override
@@ -212,23 +215,22 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                             memberdb = FirebaseDatabase.getInstance();
                             databaseReference = memberdb.getReference().child("Member");
                             final Query query = databaseReference.orderByChild("id").equalTo(ID);
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            query.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                                     {
                                         Members members = dataSnapshot1.getValue(Members.class);
-
-                                        if(ID.equals(members.getID()))
-                                        {
+                                        if(ID.equals(members.getID())) {
                                             myMember = members.getID();
                                             member_price = 0.9;
                                             if (!amountPaid.getText().toString().isEmpty()) {
                                                 double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
                                                 change_text.setText(String.format("%.2f",change));
                                             }
-                                            member_status.setText("Member exist");
+                                            member_status.setText(R.string.member_exist);
                                             member_status.setTextColor(Color.GREEN);
+                                            order.setIsMember(true);
                                             discount.setVisibility(View.VISIBLE);
                                             discount_total.setText(String.format("%.2f",order.getOrder_total() * 0.1));
                                         }
@@ -244,14 +246,14 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
                         @Override
                         public void afterTextChanged(final Editable editable) {
-                            if(editable.toString()!= myMember){
+                            if(!editable.toString().equals(myMember)){
                                 if (!amountPaid.getText().toString().isEmpty()) {
                                     double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
                                     change_text.setText(String.format("%.2f",change));
                                 }
                                 discount_total.setText(null);
                                 member_status.setTextColor(Color.RED);
-                                member_status.setText("Member do not exist");
+                                member_status.setText(R.string.member_notexist);
                                 discount.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -262,7 +264,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         @Override
                         public void onClick(View view) {
                             if (Double.parseDouble(change_text.getText().toString()) >= 0) {
-                                order.setOrder_status("Paid");
+                                order.setIsPaid(true);
                                 adapter.updateOrderItem();
                                 notifyDataSetChanged();
                                 paymentWindow.dismiss();
