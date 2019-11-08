@@ -69,7 +69,6 @@ public class OrdersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerViewAdapter = new OrdersRecyclerViewAdapter(this.getContext(), orderArrayList, menuArrayList);
         recyclerView.setAdapter(recyclerViewAdapter);
-
     }
 
     private void getOrders(){
