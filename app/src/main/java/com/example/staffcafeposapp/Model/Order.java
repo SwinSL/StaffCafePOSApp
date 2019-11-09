@@ -34,7 +34,7 @@ public class Order {
         isMember = member;
     }
 
-    public Boolean getMember() {
+    public Boolean getIsMember() {
         return isMember;
     }
 
