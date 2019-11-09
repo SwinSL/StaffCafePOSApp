@@ -19,7 +19,7 @@ public class Order {
         this.orderItemArrayList = orderItems;
         this.order_date = date;
         this.order_status = "Not Paid";
-        this.isMember =false;
+        this.isMember = false;
     }
 
     public String getOrder_status() {
@@ -32,6 +32,10 @@ public class Order {
 
     public void setIsMember(Boolean member) {
         isMember = member;
+    }
+
+    public Boolean getMember() {
+        return isMember;
     }
 
     public String getOrder_date() {
