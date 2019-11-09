@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:layout_margin="5dp">
+    android:layout_margin="3dp">
 
 
     <androidx.cardview.widget.CardView
@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="4dp"
-        app:cardElevation="10dp"
+        app:cardElevation="5dp"
         android:layout_centerHorizontal="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imageView_tablelayout"
@@ -63,10 +63,6 @@
 
 
         </RelativeLayout>
-
-
-
-
     </androidx.cardview.widget.CardView>
 
 
