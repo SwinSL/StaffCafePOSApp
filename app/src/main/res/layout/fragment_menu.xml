@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,10 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="183dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/food"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:fontFamily="@font/raleway"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_beverages"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,64 +28,68 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="120dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/beverages"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:fontFamily="@font/raleway"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_orderSummary"
         app:layout_constraintStart_toEndOf="@+id/guideline_beverages"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_Food"
         android:layout_width="400dp"
-        android:layout_height="665dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerView_Beverages"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_nav_food" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_titlePrice_food" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_Beverages"
         android:layout_width="400dp"
-        android:layout_height="665dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerView_orderSummary"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_Food"
-        app:layout_constraintTop_toBottomOf="@+id/textView_nav_Beverages" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_titlePrice_beverages" />
 
     <TextView
         android:id="@+id/textView_titleName_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/name"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
-        app:layout_constraintStart_toStartOf="@+id/guideline_food" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_food"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_titlePrice_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/price_rm"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
-        app:layout_constraintStart_toEndOf="@+id/textView_titleName_food" />
+        app:layout_constraintStart_toEndOf="@+id/textView_titleName_food"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_titleQuantity_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/item_quantity"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Food"
-        app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_food" />
+        app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_food"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_food"
@@ -96,36 +103,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/name"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
-        app:layout_constraintStart_toStartOf="@+id/guideline_beverages" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_beverages"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_titlePrice_beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/price_rm"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
-        app:layout_constraintStart_toEndOf="@+id/textView_titleName_beverages" />
+        app:layout_constraintStart_toEndOf="@+id/textView_titleName_beverages"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_titleQuantity_beverages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/raleway"
         android:text="@string/quantity"
         android:textSize="16sp"
-        android:fontFamily="@font/raleway"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_Beverages"
-        app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_beverages" />
+        app:layout_constraintStart_toEndOf="@+id/textView_titlePrice_beverages"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_beverages"
