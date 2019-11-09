@@ -19,6 +19,7 @@ public class Order {
         this.orderItemArrayList = orderItems;
         this.order_date = date;
         this.order_status = "Not Paid";
+        this.isMember =false;
     }
 
     public String getOrder_status() {
