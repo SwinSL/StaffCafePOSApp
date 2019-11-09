@@ -8,7 +8,7 @@ public class Order {
     private ArrayList<OrderItem> orderItemArrayList;
     private String order_date;
 
-    private Boolean isMember, isPaid;
+    private Boolean isMember , isPaid;
 
     public Order() {
     }
@@ -20,6 +20,7 @@ public class Order {
         this.orderItemArrayList = orderItems;
         this.order_date = date;
         this.isPaid = false;
+        this.isMember =false;
     }
 
     public Boolean getIsPaid() {
