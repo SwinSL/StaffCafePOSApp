@@ -25,7 +25,6 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
     PopupOrdersRecyclerViewAdapter(Context context, Order order) {
         this.context = context;
         this.order = order;
@@ -51,15 +50,20 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
         holder.removebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!order.getIsPaid()) {
-                    order.getOrderItemArrayList().remove(holder.getAdapterPosition());
-                    total_textview.setText(getOrder_total());
-                    updateOrderItem();
-                    notifyItemRemoved(holder.getAdapterPosition());
-                }else{
+                if(order.getOrder_status().equals("Not Paid")) {
+                    if(order.getOrderItemArrayList().size() != 1){
+                        order.getOrderItemArrayList().remove(holder.getAdapterPosition());
+                        total_textview.setText(getOrder_total());
+                        updateOrderItem();
+                        notifyItemRemoved(holder.getAdapterPosition());
+                    }else{
+                        Toast.makeText(context, "There must be at least 1 order item in an order.", Toast.LENGTH_LONG).show();
+                    }
+                }else if(order.getOrder_status().equals("Paid")){
                     Toast.makeText(context, "Order has been paid.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Order has been cancelled.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -70,7 +74,6 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
         private TextView item_name;
         private TextView item_price;
         private TextView item_quantity;
@@ -110,5 +113,4 @@ public class PopupOrdersRecyclerViewAdapter extends RecyclerView.Adapter<PopupOr
     void getTotalTextview(TextView total_textview){
         this.total_textview = total_textview;
     }
-
 }

@@ -3,7 +3,6 @@ package com.example.staffcafeposapp.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -22,7 +21,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.staffcafeposapp.Adapter.Beverages_Adapter;
 import com.example.staffcafeposapp.Adapter.MenuAdapter;
 import com.example.staffcafeposapp.Adapter.OrderSummaryAdapter;
@@ -31,7 +29,6 @@ import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
 import com.example.staffcafeposapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,21 +37,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MenuFragment extends Fragment {
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference foodCollectionReference = db.collection("Food");
     private CollectionReference beveragesCollectionReference = db.collection("Drink");
-
 
     private RecyclerView food_recyclerView;
     private MenuAdapter food_Adapter;

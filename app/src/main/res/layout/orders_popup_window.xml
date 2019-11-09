@@ -120,7 +120,21 @@
         app:layout_constraintTop_toBottomOf="@id/orders_popup_recyclerview"
         app:layout_constraintBottom_toTopOf="@id/payment_button"
         />
-
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/orders_popup_recyclerview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/payment_button"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/raleway"
+        android:text="@string/cancel_order"
+        android:padding="15dp"
+        android:layout_marginTop="90dp"
+        />
     <Button
         android:id="@+id/payment_button"
         android:layout_width="wrap_content"
@@ -128,12 +142,12 @@
         app:layout_constraintTop_toBottomOf="@id/orders_popup_recyclerview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:fontFamily="@font/raleway"
         android:text="@string/make_payment"
         android:padding="15dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="90dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

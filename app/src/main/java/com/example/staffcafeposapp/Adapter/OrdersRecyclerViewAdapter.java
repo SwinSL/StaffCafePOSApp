@@ -1,7 +1,9 @@
 package com.example.staffcafeposapp.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,24 +29,31 @@ import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
 import com.example.staffcafeposapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecyclerViewAdapter.ViewHolder> {
-
     private Context context;
     private List<Order> orderList;
     private ArrayList<MenuItem> menuItemArrayList;
     private ArrayList<String> menuStringArray;
     private String[] menuArr;
-    private Button addItemBtn, paymentbtn;
+    private Button addItemBtn, cancelBtn, paymentBtn;
     private Spinner menuSelectionSpinner;
     private EditText itemQuantitySel;
     private FirebaseDatabase memberdb;
@@ -57,7 +66,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         this.orderList = orderList;
         this.menuItemArrayList = menuItemArrayList;
     }
-
 
     @NonNull
     @Override
@@ -80,11 +88,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
 
         holder.order_id.setText(String.valueOf(order.getOrder_id()));
         holder.table_no.setText(String.valueOf(order.getTable_no()));
-        if(order.getIsPaid()){
-            holder.order_status.setText(R.string.paid);
-        }else{
-            holder.order_status.setText(R.string.not_paid);
-        }
+        holder.order_status.setText(order.getOrder_status());
     }
 
     @Override
@@ -93,7 +97,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         TextView order_id;
         TextView table_no;
         TextView order_status;
@@ -106,7 +109,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
             order_id = itemView.findViewById(R.id.textview_orders_orderid_data);
             table_no = itemView.findViewById(R.id.textview_orders_tableno_data);
             order_status = itemView.findViewById(R.id.textview_orders_status_data);
-
         }
     }
 
@@ -125,13 +127,13 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         menuSelectionSpinner = popupView.findViewById(R.id.orders_popup_spinner);
         addItemBtn = popupView.findViewById(R.id.orders_popup_addItembtn);
         itemQuantitySel = popupView.findViewById(R.id.orders_popup_quantitySel);
-        paymentbtn = popupView.findViewById(R.id.payment_button);
-
+        cancelBtn = popupView.findViewById(R.id.cancel_button);
+        paymentBtn = popupView.findViewById(R.id.payment_button);
 
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!order.getIsPaid()) {
+                if(order.getOrder_status().equals("Not Paid")) {
                     String selItem = menuSelectionSpinner.getSelectedItem().toString();
                     int quantity;
                     if (!itemQuantitySel.getText().toString().isEmpty()) {
@@ -148,8 +150,11 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     } else {
                         Toast.makeText(context, "Please enter quantity", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                }else if(order.getOrder_status().equals("Paid")){
                     Toast.makeText(context, "Order has been paid.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Order has been cancelled.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -166,10 +171,34 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-        paymentbtn.setOnClickListener(new View.OnClickListener() {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!order.getIsPaid()) {
+                if(order.getOrder_status().equals("Not Paid")) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Cancel Order")
+                            .setMessage("Are you sure you want to cancel this order?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    order.setOrder_status("Cancelled");
+                                    adapter.updateOrderItem();
+                                    notifyDataSetChanged();
+                                }
+
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                }else{
+                    Toast.makeText(context, "Order is already paid or cancelled.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        paymentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (order.getOrder_status().equals("Not Paid")) {
                     popupWindow.dismiss();
                     @SuppressLint("InflateParams") final View paymentView = LayoutInflater.from(context).inflate(R.layout.payment_window, null);
                     final PopupWindow paymentWindow = new PopupWindow(paymentView, 400, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -264,7 +293,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         @Override
                         public void onClick(View view) {
                             if (Double.parseDouble(change_text.getText().toString()) >= 0) {
-                                order.setIsPaid(true);
+                                order.setOrder_status("Paid");
                                 adapter.updateOrderItem();
                                 notifyDataSetChanged();
                                 paymentWindow.dismiss();
@@ -277,14 +306,16 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     paymentWindow.setOutsideTouchable(true);
                     paymentWindow.setFocusable(true);
                     paymentWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-                }else{
+                }else if(order.getOrder_status().equals("Paid")){
                     Toast.makeText(context, "Order has been paid.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "Order has been cancelled.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
 
     }
-
 
     private void setMenu(){
         menuStringArray = new ArrayList<>();

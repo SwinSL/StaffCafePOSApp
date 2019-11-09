@@ -45,6 +45,7 @@
     <string name="not_paid">Not Paid</string>
     <string name="member_notexist">Member do not exist</string>
     <string name="member_exist">Member exist</string>
+    <string name="cancel_order">Cancel Order</string>
 
 
     <string-array name="table_status">
