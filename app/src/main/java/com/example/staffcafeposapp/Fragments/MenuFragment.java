@@ -170,11 +170,12 @@ public class MenuFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
-                                                for (DocumentSnapshot document : task.getResult()) {
+                                                for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                                     Order order = document.toObject(Order.class);
 
+                                                    assert order != null;
                                                     if (order.getOrder_date().equals(todayString)) {
-                                                        dailyOrderCounter[0]++;
+                                                        dailyOrderCounter[0] = Integer.parseInt(order.getOrder_id().substring(9));
                                                     }
                                                 }
 
@@ -200,7 +201,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document: task.getResult()){
+                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult())){
                         MenuItem food = document.toObject(MenuItem.class);
                         foodArrayList.add(food);
                         food_Adapter.notifyDataSetChanged();
@@ -213,7 +214,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document: task.getResult()){
+                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult())){
                         MenuItem beverages = document.toObject(MenuItem.class);
                         beveragesArrayList.add(beverages);
                         beverages_Adapter.notifyDataSetChanged();
@@ -263,7 +264,7 @@ public class MenuFragment extends Fragment {
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
         Toast.makeText(getContext(), "Order Successful!", Toast.LENGTH_SHORT).show();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new OrdersFragment());
         fragmentTransaction.addToBackStack(null);
