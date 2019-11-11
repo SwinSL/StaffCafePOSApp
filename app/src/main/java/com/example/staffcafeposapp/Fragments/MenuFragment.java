@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.example.staffcafeposapp.Adapter.OrderSummaryAdapter;
 import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
+import com.example.staffcafeposapp.Model.Tables;
 import com.example.staffcafeposapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -59,7 +62,7 @@ public class MenuFragment extends Fragment {
     private ArrayList<OrderItem> selectedMenuItemList;
     private OrderSummaryAdapter orderSummary_adapter;
     private TextView totalPrice_textView;
-    private EditText tableNo_editText;
+    private Spinner tableNo_spinner;
     private Button submitButton;
     private double total;
     private String todayString;
@@ -74,6 +77,8 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setupTableSpinner();
 
         foodArrayList = new ArrayList<>();
         beveragesArrayList = new ArrayList<>();
@@ -139,14 +144,14 @@ public class MenuFragment extends Fragment {
         orderSummary_adapter = new OrderSummaryAdapter(this.getContext(), selectedMenuItemList);
         orderSummary_recyclerView.setAdapter(orderSummary_adapter);
 
-        tableNo_editText = view.findViewById(R.id.editText_tableNoInput);
+        tableNo_spinner = view.findViewById(R.id.spinner_tableNo);
         totalPrice_textView = view.findViewById(R.id.textView_totalPrice);
         submitButton = view.findViewById(R.id.button_orderSubmit);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedMenuItemList.size() > 0 && !tableNo_editText.getText().toString().isEmpty()) {
+                if (selectedMenuItemList.size() > 0 && !tableNo_spinner.getSelectedItem().toString().isEmpty()) {
                     new AlertDialog.Builder(getContext())
                             .setTitle("Submit Order")
                             .setMessage("Are you sure you want to submit this order?")
@@ -217,6 +222,30 @@ public class MenuFragment extends Fragment {
         });
     }
 
+    private void setupTableSpinner(){
+        final ArrayList<String> tableNoArrayList = new ArrayList<>();
+        CollectionReference tableCollectionReference = db.collection("Tables");
+        tableCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: task.getResult())
+                    {
+                        Tables tables = document.toObject(Tables.class);
+                        if(tables.getTableStatus().equals("Available")){
+                            tableNoArrayList.add(tables.getTableNo());
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tableNoArrayList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    tableNo_spinner.setAdapter(adapter);
+                }
+            }
+        });
+
+
+    }
+
 
     private void setOrderTotal(){
         total = 0;
@@ -228,7 +257,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void submitOrder(int noOfDailyOrder){
-        Order order = new Order(todayString + "-" + (noOfDailyOrder+1), tableNo_editText.getText().toString(), total, selectedMenuItemList, todayString);
+        Order order = new Order(todayString + "-" + (noOfDailyOrder+1), tableNo_spinner.getSelectedItem().toString(), total, selectedMenuItemList, todayString);
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
         Toast.makeText(getContext(), "Order Successful!", Toast.LENGTH_SHORT).show();
