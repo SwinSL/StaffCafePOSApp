@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class MenuFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -229,14 +230,14 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document: task.getResult())
+                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult()))
                     {
                         Tables tables = document.toObject(Tables.class);
                         if(tables.getTableStatus().equals("Available")){
                             tableNoArrayList.add(tables.getTableNo());
                         }
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tableNoArrayList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, tableNoArrayList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     tableNo_spinner.setAdapter(adapter);
                 }
@@ -257,7 +258,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void submitOrder(int noOfDailyOrder){
-        Order order = new Order(todayString + "-" + (noOfDailyOrder+1), tableNo_spinner.getSelectedItem().toString(), total, selectedMenuItemList, todayString);
+        String formatted_noOfDailyOrder = String.format("%02d", noOfDailyOrder+1);
+        Order order = new Order(todayString + "-" + formatted_noOfDailyOrder, tableNo_spinner.getSelectedItem().toString(), total, selectedMenuItemList, todayString);
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
         Toast.makeText(getContext(), "Order Successful!", Toast.LENGTH_SHORT).show();

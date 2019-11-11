@@ -57,6 +57,7 @@ public class OrdersFragment extends Fragment {
     }
 
     private void getOrders(){
+        collectionReference.orderBy("order_id");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
