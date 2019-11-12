@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,23 +199,23 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     total.setText(adapter.getOrder_total());
 
                     final TextView change_text = paymentView.findViewById(R.id.calculate_change_data);
-
+                    final EditText memberID = paymentView.findViewById(R.id.member_id_input);
                     final EditText amountPaid = paymentView.findViewById(R.id.amount_paid_input);
                     amountPaid.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                            if(memberID.getText().toString().isEmpty())
+                                member_price = 1.0;
                         }
 
                         @Override
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                         }
 
                         @Override
                         public void afterTextChanged(Editable editable) {
                             if (!amountPaid.getText().toString().isEmpty()) {
-                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
+                                double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
                                 change_text.setText(String.format("%.2f",change));
                             }
                         }
@@ -223,7 +224,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     final TextView discount = paymentView.findViewById(R.id.tv_discount);
                     final TextView discount_total = paymentView.findViewById(R.id.tv_totalDiscount);
                     final TextView member_status = paymentView.findViewById(R.id.tv_member);
-                    final EditText memberID = paymentView.findViewById(R.id.member_id_input);
+
                     memberID.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -267,6 +268,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         @Override
                         public void afterTextChanged(final Editable editable) {
                             if(!editable.toString().equals(myMember)){
+                                member_price = 1.0;
                                 if (!amountPaid.getText().toString().isEmpty()) {
                                     double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total();
                                     change_text.setText(String.format("%.2f",change));
