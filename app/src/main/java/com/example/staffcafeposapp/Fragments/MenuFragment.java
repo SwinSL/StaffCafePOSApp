@@ -3,6 +3,7 @@ package com.example.staffcafeposapp.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -170,7 +171,7 @@ public class MenuFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
-                                                for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                for (DocumentSnapshot document : task.getResult()) {
                                                     Order order = document.toObject(Order.class);
 
                                                     assert order != null;
@@ -263,11 +264,32 @@ public class MenuFragment extends Fragment {
         Order order = new Order(todayString + "-" + formatted_noOfDailyOrder, tableNo_spinner.getSelectedItem().toString(), total, selectedMenuItemList, todayString);
         DocumentReference documentReference = db.collection("Orders").document(order.getOrder_id());
         documentReference.set(order);
+        updateTableStatus();
         Toast.makeText(getContext(), "Order Successful!", Toast.LENGTH_SHORT).show();
         FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, new OrdersFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private void updateTableStatus(){
+        final CollectionReference tableCollectionReference = db.collection("Tables");
+        tableCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult()))
+                    {
+                        Tables table = document.toObject(Tables.class);
+                        if(table.getTableNo().equals(tableNo_spinner.getSelectedItem().toString())){
+                            table.setTableStatus("Not Available");
+                            DocumentReference documentReference = tableCollectionReference.document(table.getTableNo());
+                            documentReference.set(table);
+                        }
+                    }
+                }
+            }
+        });
     }
 }

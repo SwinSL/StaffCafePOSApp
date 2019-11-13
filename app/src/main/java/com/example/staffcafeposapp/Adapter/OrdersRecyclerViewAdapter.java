@@ -29,17 +29,29 @@ import com.example.staffcafeposapp.Model.Members;
 import com.example.staffcafeposapp.Model.MenuItem;
 import com.example.staffcafeposapp.Model.Order;
 import com.example.staffcafeposapp.Model.OrderItem;
+import com.example.staffcafeposapp.Model.Tables;
 import com.example.staffcafeposapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecyclerViewAdapter.ViewHolder> {
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private Context context;
     private List<Order> orderList;
     private ArrayList<MenuItem> menuItemArrayList;
@@ -287,6 +299,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                         public void onClick(View view) {
                             if (Double.parseDouble(change_text.getText().toString()) >= 0) {
                                 order.setOrder_status("Paid");
+                                updateTableStatus(order.getTable_no());
                                 adapter.updateOrderItem();
                                 notifyDataSetChanged();
                                 paymentWindow.dismiss();
@@ -303,7 +316,6 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                     Toast.makeText(context, "Order has been paid.", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "Order has been cancelled.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -321,5 +333,24 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
         menuArr = menuStringArray.toArray(menuArr);
     }
 
+    private void updateTableStatus(final String tableNo){
+        final CollectionReference tableCollectionReference = db.collection("Tables");
+        tableCollectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document: task.getResult())
+                    {
+                        Tables table = document.toObject(Tables.class);
+                        if(table.getTableNo().equals(tableNo)){
+                            table.setTableStatus("Available");
+                            DocumentReference documentReference = tableCollectionReference.document(table.getTableNo());
+                            documentReference.set(table);
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
 

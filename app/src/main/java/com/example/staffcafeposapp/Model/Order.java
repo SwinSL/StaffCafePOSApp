@@ -50,6 +50,10 @@ public class Order {
         return table_no;
     }
 
+    public void setTable_no(String table_no) {
+        this.table_no = table_no;
+    }
+
     public double getOrder_total() {
         return order_total;
     }

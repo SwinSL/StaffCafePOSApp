@@ -54,8 +54,6 @@ public class TablesFragment extends Fragment {
         table_Adapter = new TablesRecyclerViewAdapter(this.getContext(), tablesArrayList);
         table_recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 4));
         table_recyclerView.setAdapter(table_Adapter);
-
-
     }
 
     private void getTableInfo()
