@@ -46,6 +46,10 @@
     <string name="member_notexist">Member do not exist</string>
     <string name="member_exist">Member exist</string>
     <string name="cancel_order">Cancel Order</string>
+    <string name="orders">Orders</string>
+    <string name="order_id_2">Order ID</string>
+    <string name="table_no_2">Table No.</string>
+    <string name="status_2">Status</string>
 
 
     <string-array name="table_status">
