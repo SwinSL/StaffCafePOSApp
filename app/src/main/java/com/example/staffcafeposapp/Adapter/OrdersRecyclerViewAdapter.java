@@ -229,7 +229,11 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                             if (!amountPaid.getText().toString().isEmpty()) {
                                 double change = Double.parseDouble(amountPaid.getText().toString()) - order.getOrder_total() * member_price;
                                 change_text.setText(String.format("%.2f",change));
+                            }else{
+                                double change = 0.00;
+                                change_text.setText(String.format("%.2f",change));
                             }
+
                         }
                     });
 
