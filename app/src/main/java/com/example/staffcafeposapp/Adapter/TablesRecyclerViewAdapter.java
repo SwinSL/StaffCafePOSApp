@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,11 +57,10 @@ public class TablesRecyclerViewAdapter extends RecyclerView.Adapter<TablesRecycl
 
         Tables tables = tablesArrayList.get(position);
         holder.textView_tableNo.setText(String.valueOf(tables.getTableNo()));
-        holder.textView_tableNoOfSeat.setText(String.valueOf("("+tables.getTableNoOfSeat() + ")"));
+        holder.textView_tableNoOfSeat.setText(String.format("(%d)", tables.getTableNoOfSeat()));
         holder.textView_tableStatus.setText(String.valueOf(tables.getTableStatus()));
 
         String tablestatus = holder.textView_tableStatus.getText().toString();
-        System.out.println(tablestatus);
 
         if(tablestatus.equals("Available"))
         {

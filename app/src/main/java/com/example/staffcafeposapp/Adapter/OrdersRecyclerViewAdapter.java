@@ -186,6 +186,7 @@ public class OrdersRecyclerViewAdapter extends RecyclerView.Adapter<OrdersRecycl
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     order.setOrder_status("Cancelled");
+                                    updateTableStatus(order.getTable_no());
                                     adapter.updateOrderItem();
                                     notifyDataSetChanged();
                                 }

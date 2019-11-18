@@ -47,7 +47,6 @@ public class OrdersFragment extends Fragment {
         menuArrayList = new ArrayList<>();
         getOrders();
         fetchMenu();
-        //setOrders();
 
         recyclerView = view.findViewById(R.id.orders_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -76,26 +75,6 @@ public class OrdersFragment extends Fragment {
             }
         });
     }
-
-    /*private void setOrders(){
-        OrderItem orderItem = new OrderItem("Ice Lemon Tea", 5, 1);
-        ArrayList<OrderItem> orderlist = new ArrayList<>();
-        orderlist.add(orderItem);
-
-        Order order = new Order("Order04", "4", 10, orderlist);
-        collectionReference.document(order.getOrder_id()).set(order)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("TAG", "DocumentSnapshot successfully written!");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("TAG", "Error writing document", e);
-            }
-        });
-    }*/
 
     private void fetchMenu(){
         menuArrayList = new ArrayList<>();

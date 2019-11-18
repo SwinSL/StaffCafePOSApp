@@ -87,7 +87,6 @@ public class MenuFragment extends Fragment {
         selectedMenuItemList = new ArrayList<>();
         getMenu();
 
-        //Food Recycler View
         food_recyclerView = view.findViewById(R.id.recyclerView_Food);
         food_recyclerView.setHasFixedSize(true);
         food_recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -232,14 +231,14 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult()))
+                    for(QueryDocumentSnapshot document: task.getResult())
                     {
                         Tables tables = document.toObject(Tables.class);
                         if(tables.getTableStatus().equals("Available")){
                             tableNoArrayList.add(tables.getTableNo());
                         }
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, tableNoArrayList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, tableNoArrayList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     tableNo_spinner.setAdapter(adapter);
                 }
@@ -279,11 +278,11 @@ public class MenuFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document: Objects.requireNonNull(task.getResult()))
+                    for(QueryDocumentSnapshot document: task.getResult())
                     {
                         Tables table = document.toObject(Tables.class);
                         if(table.getTableNo().equals(tableNo_spinner.getSelectedItem().toString())){
-                            table.setTableStatus("Not Available");
+                            table.setTableStatus("Unavailable");
                             DocumentReference documentReference = tableCollectionReference.document(table.getTableNo());
                             documentReference.set(table);
                         }
